@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@dahli/clippy-copy-element": ["./packages/clippy-copy-element/src"]
+    }
+  },
+  "include": [
+    "./packages/clippy-copy-element/src/**/.ts"
+  ]
+}

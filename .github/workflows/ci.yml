@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-main-${{ hashFiles('yarn.lock') }}
+      - name: Run ESLint
+        run: |
+          yarn
+          yarn lint
+  spec:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: browser-actions/setup-chrome@latest
+      - name: Setup node
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-main-${{ hashFiles('yarn.lock') }}
+      - name: Run specs
+        run: |
+          yarn
+          yarn ci
