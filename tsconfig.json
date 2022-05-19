@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "paths": {
-      "@dahli/clippy-copy-element": ["./packages/clippy-copy-element/src"]
+      "@dahli/clippy-copy-element": ["./packages/clippy-copy-element/src"],
+      "@dahli/details-modal-element": ["./packages/details-modal-element/src"]
     }
   },
   "include": [
-    "./packages/clippy-copy-element/src/**/.ts"
+    "./packages/clippy-copy-element/src/**/.ts",
+    "./packages/details-modal-element/src/**/.ts"
   ]
 }

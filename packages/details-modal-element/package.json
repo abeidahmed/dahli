@@ -1,0 +1,20 @@
+{
+  "name": "@dahli/details-modal-element",
+  "version": "1.0.0",
+  "description": "A modal component that works with the <details> tag",
+  "scripts": {
+    "start": "web-dev-server --open examples/",
+    "build": "tsc && node esbuild.config.js --watch",
+    "clean": "rm -rf ./dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "keywords": [
+    "dialog",
+    "modal"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details Modal Element</title>
+    <link href="https://unpkg.com/@primer/css@^19.0.0/dist/primer.css" rel="stylesheet" />
+  </head>
+
+  <body class="container-sm py-6">
+    <details class="details-reset details-overlay details-overlay-dark">
+      <summary class="btn">Open dialog</summary>
+      <details-modal class="Box Box--overlay d-flex flex-column position-fixed" style="left: 50%; transform: translateX(-50%); z-index: 9999; top: 20%;">
+        <div class="Box-header">
+          <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
+          <h3 class="Box-title">Box title</h3>
+        </div>
+
+        <div class="Box-body overflow-auto">
+          <p>
+            The quick brown fox jumps over the lazy dog and feels as if he were in the seventh heaven of typography
+            together with Hermann Zapf, the most famous artist of the...
+          </p>
+        </div>
+
+        <div class="Box-footer">
+          <button type="button" class="btn btn-block">Okidoki</button>
+        </div>
+      </details-modal>
+    </details>
+
+    <section class="mt-6">
+      <details class="details-reset details-overlay details-overlay-dark">
+        <summary class="btn">Open dialog with form</summary>
+        <details-modal class="Box Box--overlay d-flex flex-column position-fixed" style="left: 50%; transform: translateX(-50%); z-index: 9999; top: 20%;">
+          <div class="Box-header">
+            <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
+            <h3 class="Box-title">Box title</h3>
+          </div>
+
+          <div class="Box-body overflow-auto">
+            <form method="dialog">
+              <div class="form-group-header">
+                <label for="input">Your name</label>
+              </div>
+
+              <div class="form-group-group">
+                <input type="text" class="form-control width-full">
+              </div>
+
+              <button type="submit" class="btn btn-block mt-3">Submit form</button>
+            </form>
+          </div>
+        </details-modal>
+      </details>
+    </section>
+    <script src="../dist/index.js"></script>
+  </body>
+</html>
