@@ -2,11 +2,13 @@
   "compilerOptions": {
     "paths": {
       "@dahli/clippy-copy-element": ["./packages/clippy-copy-element/src"],
-      "@dahli/details-modal-element": ["./packages/details-modal-element/src"]
+      "@dahli/details-modal-element": ["./packages/details-modal-element/src"],
+      "@dahli/auto-complete-element": ["./packages/auto-complete-element/src"]
     }
   },
   "include": [
     "./packages/clippy-copy-element/src/**/.ts",
-    "./packages/details-modal-element/src/**/.ts"
+    "./packages/details-modal-element/src/**/.ts",
+    "./packages/auto-complete-element/src/**/.ts"
   ]
 }
