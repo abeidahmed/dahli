@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Complete Element</title>
+    <style>
+      body {
+        max-width: 320px;
+        margin: 40px auto;
+      }
+
+      ul {
+        border: 1px solid;
+        padding: 8px;
+        list-style: none;
+        margin-top: 4px;
+      }
+
+      li {
+        padding: 6px 8px;
+      }
+
+      li > span {
+        display: none;
+      }
+
+      li[aria-selected="true"] > span {
+        display: inline-block;
+      }
+
+      li[data-tracking] {
+        background-color: gray;
+      }
+    </style>
+  </head>
+
+  <body class="container-sm py-6">
+    <auto-complete for="options">
+      <input type="text" class="form-control">
+
+      <ul id="options">
+        <li role="option" data-autocomplete-value="Option 1">
+          Option 1
+          <span>(checked)</span>
+        </li>
+        <li role="option" data-autocomplete-value="Option 2">
+          Option 2
+          <span>(checked)</span>
+        </li>
+        <li role="option" aria-disabled="true" data-autocomplete-value="Disabled option 1">
+          Disabled option 1
+          <span>(checked)</span>
+        </li>
+        <li role="option" disabled data-autocomplete-value="Disabled option 2">
+          Disabled option 2
+          <span>(checked)</span>
+        </li>
+        <li role="option" data-autocomplete-value="Abeid">
+          Option 4
+          <span>(checked)</span>
+        </li>
+        <li role="option" data-autocomplete-value="Abeid 1">
+          Option 5
+          <span>(checked)</span>
+        </li>
+        <li role="option" hidden data-autocomplete-value="Hidden option">
+          Hidden option
+          <span>(checked)</span>
+        </li>
+      </ul>
+    </auto-complete>
+    <script src="../dist/index.js"></script>
+  </body>
+</html>
