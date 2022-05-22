@@ -194,5 +194,16 @@ describe('AutoCompleteElement', () => {
       expect(input.value).to.equal(options[1].getAttribute('data-autocomplete-value'));
       expect(list).to.have.attribute('hidden');
     });
+
+    it('dispatches an event with option as the related target', () => {
+      let relatedTarget: HTMLElement | null = null;
+      document.addEventListener('auto-complete:selected', (event: CustomEvent) => {
+        relatedTarget = event.detail.relatedTarget;
+      });
+
+      input.focus();
+      options[1].dispatchEvent(new CustomEvent('combobox:commit', { bubbles: true }));
+      expect(relatedTarget).to.equal(options[1]);
+    });
   });
 });

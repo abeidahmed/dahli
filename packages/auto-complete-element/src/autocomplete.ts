@@ -126,7 +126,12 @@ export default class Autocomplete {
     this.input.value = value;
     this.list.hidden = true;
 
-    this.list.dispatchEvent(new CustomEvent('auto-complete:selected', { detail: { relatedTarget: option } }));
+    this.list.dispatchEvent(
+      new CustomEvent('auto-complete:selected', {
+        detail: { relatedTarget: option },
+        bubbles: true,
+      })
+    );
   }
 }
 
