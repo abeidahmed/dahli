@@ -121,7 +121,7 @@ export default class Combobox {
 
     // We want hidden options here because the end-user might toggle the `hidden` attribute to filter the options
     for (const el of this.options) {
-      if (option === el) {
+      if (el === option) {
         this.input.setAttribute('aria-activedescendant', el.id);
         el.setAttribute('data-tracking', '');
         el.scrollIntoView({ block: 'nearest' });
