@@ -1,0 +1,23 @@
+{
+  "name": "@dahli/auto-complete-element",
+  "version": "1.0.0",
+  "description": "Single and multi auto-complete component",
+  "scripts": {
+    "start": "web-dev-server --open examples/",
+    "build": "tsc && node esbuild.config.js --watch",
+    "clean": "rm -rf ./dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "keywords": [
+    "select menu",
+    "autocomplete"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@dahli/utils": "1.0.0"
+  }
+}
