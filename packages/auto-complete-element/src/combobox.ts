@@ -1,3 +1,5 @@
+import { brandedId } from '@dahli/utils/src/random-id';
+
 const ctrlBindings = !!navigator.userAgent.match(/Macintosh/);
 
 export default class Combobox {
@@ -181,8 +183,4 @@ function visible(option: HTMLElement) {
 
 function enabled(option: HTMLElement) {
   return !option.hasAttribute('disabled') && option.getAttribute('aria-disabled') !== 'true';
-}
-
-function brandedId() {
-  return `dahli-${Math.random().toString().slice(2, 6)}`;
 }

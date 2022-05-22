@@ -16,5 +16,8 @@
     "autocomplete"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@dahli/utils": "1.0.0"
+  }
 }
