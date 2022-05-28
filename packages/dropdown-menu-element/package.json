@@ -1,0 +1,24 @@
+{
+  "name": "@dahli/dropdown-menu-element",
+  "version": "0.1.0",
+  "description": "A dropdown-menu built with the <details> tag",
+  "scripts": {
+    "start": "web-dev-server --open examples/",
+    "build": "tsc && node esbuild.config.js --watch",
+    "clean": "rm -rf ./dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "keywords": [
+    "dropdown",
+    "menu",
+    "details"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@dahli/utils": "1.0.0"
+  }
+}
