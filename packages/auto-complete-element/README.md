@@ -11,7 +11,7 @@ npm install @dahli/auto-complete-element
 ## Usage
 
 ```js
-import @dahli/auto-complete-element
+import '@dahli/auto-complete-element'
 ```
 
 ### Markup
