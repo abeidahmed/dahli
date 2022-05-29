@@ -1,13 +1,16 @@
+import type AutoCompleteElement from './index';
 import Combobox from './combobox';
+import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 
 export default class Autocomplete {
+  element: AutoCompleteElement;
   input: HTMLInputElement;
   list: HTMLElement;
   combobox: Combobox;
   listObserver: MutationObserver;
-  isInteractingWithList = false;
 
-  constructor(input: HTMLInputElement, list: HTMLElement) {
+  constructor(element: AutoCompleteElement, input: HTMLInputElement, list: HTMLElement) {
+    this.element = element;
     this.input = input;
     this.list = list;
 
@@ -18,29 +21,24 @@ export default class Autocomplete {
     this.input.setAttribute('autocomplete', 'off');
 
     this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
-    this.onListMouseDown = this.onListMouseDown.bind(this);
     this.onCommit = this.onCommit.bind(this);
     this.onInput = this.onInput.bind(this);
 
     this.input.addEventListener('focus', this.onFocus);
-    this.input.addEventListener('blur', this.onBlur);
     this.input.addEventListener('keydown', this.onKeydown);
     this.input.addEventListener('input', this.onInput);
-    this.list.addEventListener('mousedown', this.onListMouseDown);
     this.list.addEventListener('combobox:commit', this.onCommit);
 
     this.listObserver = new MutationObserver(this.onListToggle.bind(this));
     this.listObserver.observe(this.list, { attributes: true, attributeFilter: ['hidden'] });
+    useOutsideInteraction(this.closeOnOutsideInteraction.bind(this));
   }
 
   destroy() {
     this.input.removeEventListener('focus', this.onFocus);
-    this.input.removeEventListener('blur', this.onBlur);
     this.input.removeEventListener('keydown', this.onKeydown);
     this.input.removeEventListener('input', this.onInput);
-    this.list.removeEventListener('mousedown', this.onListMouseDown);
     this.list.removeEventListener('combobox:commit', this.onCommit);
 
     this.listObserver.disconnect();
@@ -61,17 +59,6 @@ export default class Autocomplete {
     this.list.hidden = false;
     this.combobox.options.forEach(filterOptions('', { matching: 'data-autocomplete-value' }));
     activateFirstOption(this);
-  }
-
-  onBlur() {
-    if (this.isInteractingWithList) {
-      this.isInteractingWithList = false;
-      return;
-    }
-
-    if (!this.list.hidden) {
-      this.list.hidden = true;
-    }
   }
 
   onKeydown(event: KeyboardEvent) {
@@ -114,10 +101,6 @@ export default class Autocomplete {
     this.combobox.setActive(this.combobox.visibleOptions[0]);
   }
 
-  onListMouseDown() {
-    this.isInteractingWithList = true;
-  }
-
   onCommit(event: Event) {
     const option = event.target;
     if (!(option instanceof HTMLElement)) return;
@@ -132,6 +115,13 @@ export default class Autocomplete {
         bubbles: true,
       })
     );
+  }
+
+  closeOnOutsideInteraction(event: Event) {
+    if (this.list.hidden) return;
+    if (this.element.contains(event.target as HTMLElement)) return;
+
+    this.list.hidden = true;
   }
 }
 

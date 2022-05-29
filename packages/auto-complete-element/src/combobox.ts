@@ -5,6 +5,10 @@ const ctrlBindings = !!navigator.userAgent.match(/Macintosh/);
 export default class Combobox {
   input: HTMLInputElement;
   list: HTMLElement;
+  // Combobox does not use an actual hover/focus because it is not possible to focus input and options elements at the
+  // same time. So for the options, it uses `data-tracking` to mimic mouse hover. But `data-tracking` is also activated
+  // when ArrowDown and ArrowUp key is pressed. This distinction will help us know how the tracking is done.
+  isMouseMoving = false;
 
   constructor(input: HTMLInputElement, list: HTMLElement) {
     this.input = input;
@@ -22,27 +26,34 @@ export default class Combobox {
     this.onKeydown = this.onKeydown.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onListMouseOver = this.onListMouseOver.bind(this);
+    this.onListMouseMove = this.onListMouseMove.bind(this);
   }
 
   start() {
+    this.isMouseMoving = false;
     this.input.setAttribute('aria-expanded', 'true');
     this.setInitialAttributesOnOptions();
 
     this.input.addEventListener('keydown', this.onKeydown);
     this.list.addEventListener('click', this.onClick);
     this.list.addEventListener('mouseover', this.onListMouseOver);
+    this.list.addEventListener('mousemove', this.onListMouseMove);
   }
 
   stop() {
+    this.isMouseMoving = false;
     this.clearActiveOption();
     this.input.setAttribute('aria-expanded', 'false');
 
     this.input.removeEventListener('keydown', this.onKeydown);
     this.list.removeEventListener('click', this.onClick);
     this.list.removeEventListener('mouseover', this.onListMouseOver);
+    this.list.removeEventListener('mousemove', this.onListMouseMove);
   }
 
   onKeydown(event: KeyboardEvent) {
+    this.isMouseMoving = false;
+
     if (event.shiftKey || event.metaKey || event.altKey) return;
     if (!ctrlBindings && event.ctrlKey) return;
 
@@ -82,11 +93,23 @@ export default class Combobox {
   }
 
   onListMouseOver(event: Event) {
-    const { target } = event;
-    if (!(target instanceof HTMLElement)) return;
+    if (!this.isMouseMoving) {
+      event.preventDefault();
+      return;
+    }
 
-    const option = target.closest<HTMLElement>('[role="option"]');
-    if (!(option instanceof HTMLElement)) return;
+    const option = getClosestOptionFrom(event.target as HTMLElement);
+    if (!option) return;
+
+    this.setActive(option);
+  }
+
+  onListMouseMove(event: Event) {
+    if (this.isMouseMoving) return;
+
+    this.isMouseMoving = true;
+    const option = getClosestOptionFrom(event.target as HTMLElement);
+    if (!option) return;
 
     this.setActive(option);
   }
@@ -171,6 +194,15 @@ function commit(list: HTMLElement) {
 
   activeOption.click();
   return true;
+}
+
+function getClosestOptionFrom(target: HTMLElement) {
+  if (!(target instanceof HTMLElement)) return false;
+
+  const option = target.closest<HTMLElement>('[role="option"]');
+  if (!(option instanceof HTMLElement)) return false;
+
+  return option;
 }
 
 function visible(option: HTMLElement) {

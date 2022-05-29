@@ -1,5 +1,6 @@
 import { brandedId } from '@dahli/utils/src/random-id';
 import type DropdownMenuElement from './index';
+import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 
 export default class DropdownMenu {
   details: HTMLDetailsElement;
@@ -28,15 +29,13 @@ export default class DropdownMenu {
     this.onKeydown = this.onKeydown.bind(this);
     this.onMousedown = this.onMousedown.bind(this);
     this.commitItem = this.commitItem.bind(this);
-    this.closeOnOutsideInteraction = this.closeOnOutsideInteraction.bind(this);
 
     this.details.addEventListener('toggle', this.onToggle);
     this.details.addEventListener('keydown', this.onKeydown);
     this.details.addEventListener('mousedown', this.onMousedown);
     this.details.addEventListener('click', this.commitItem);
 
-    document.addEventListener('pointerdown', this.closeOnOutsideInteraction);
-    window.addEventListener('focusin', this.closeOnOutsideInteraction);
+    useOutsideInteraction(this.closeOnOutsideInteraction.bind(this));
   }
 
   destroy() {
@@ -44,9 +43,6 @@ export default class DropdownMenu {
     this.details.removeEventListener('keydown', this.onKeydown);
     this.details.removeEventListener('mousedown', this.onMousedown);
     this.details.removeEventListener('click', this.commitItem);
-
-    document.removeEventListener('pointerdown', this.closeOnOutsideInteraction);
-    window.removeEventListener('focusin', this.closeOnOutsideInteraction);
   }
 
   onToggle() {

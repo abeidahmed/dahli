@@ -11,7 +11,7 @@ export default class AutoCompleteElement extends HTMLElement {
     const list = document.getElementById(id);
     if (!(input instanceof HTMLElement) || !list) return;
 
-    this.autocomplete = new Autocomplete(input, list);
+    this.autocomplete = new Autocomplete(this, input, list);
   }
 
   disconnectedCallback() {
