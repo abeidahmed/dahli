@@ -6,6 +6,7 @@ function press(element: Element, key: string) {
 }
 
 function mouseover(element: Element) {
+  element.dispatchEvent(new CustomEvent('mousemove', { bubbles: true }));
   element.dispatchEvent(new CustomEvent('mouseover', { bubbles: true }));
 }
 

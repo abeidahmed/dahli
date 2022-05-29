@@ -46,11 +46,11 @@ describe('AutoCompleteElement', () => {
       });
     });
 
-    it('closes the menu on input blur', () => {
+    it('closes the menu on outside interaction', () => {
       input.focus();
       expect(list).not.to.have.attribute('hidden');
 
-      input.blur();
+      document.body.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }));
       expect(list).to.have.attribute('hidden');
     });
   });
