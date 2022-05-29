@@ -1,7 +1,12 @@
 {
   "name": "@dahli/clippy-copy-element",
-  "version": "1.0.0",
-  "description": "A simple clipboard element.",
+  "version": "0.1.0",
+  "description": "A clipboard element to copy text content, input values, and more.",
+  "repository": "abeidahmed/dahli/tree/main/packages/clippy-copy-element",
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "web-dev-server --open examples/",
     "build": "tsc && node esbuild.config.js --watch",
@@ -10,11 +15,9 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
   "keywords": [
     "clipboard",
     "copy"
   ],
-  "author": "",
   "license": "MIT"
 }
