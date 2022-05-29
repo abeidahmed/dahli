@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dropdown Menu Element</title>
+
+    <style>
+      body {
+        max-width: 476px;
+        width: 100%;
+        margin: 40px auto;
+      }
+
+      dropdown-menu {
+        display: block;
+        border: 1px solid;
+        margin-top: 4px;
+        padding: 8px;
+      }
+
+      a[role='menuitem'] {
+        display: block;
+        padding: 4px 0;
+      }
+
+      a[role='menuitem']:focus {
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <details>
+      <summary>Dropdown menu</summary>
+      <dropdown-menu>
+        <a href="#" role="menuitem">Menu 1</a>
+        <a href="#" role="menuitem">Menu 2</a>
+        <a href="#" role="menuitem">Menu 3</a>
+      </dropdown-menu>
+    </details>
+
+    <script src="../dist/index.js"></script>
+  </body>
+</html>
