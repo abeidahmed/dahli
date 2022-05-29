@@ -1,8 +1,8 @@
 # Changelog
 
-This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Each package has its own changelog.
 
-## 0.1.0
-
-### Added
-- Everything!
+- [@dahli/auto-complete-element](https://github.com/abeidahmed/dahli/tree/main/packages/auto-complete-element/CHANGELOG.md)
+- [@dahli/clippy-copy-element](https://github.com/abeidahmed/dahli/tree/main/packages/clippy-copy-element/CHANGELOG.md)
+- [@dahli/details-modal-element](https://github.com/abeidahmed/dahli/tree/main/packages/details-modal-element/CHANGELOG.md)
+- [@dahli/dropdown-menu-element](https://github.com/abeidahmed/dahli/tree/main/packages/dropdown-menu-element/CHANGELOG.md)
