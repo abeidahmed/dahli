@@ -1,5 +1,6 @@
 import type AutoCompleteElement from './index';
 import Combobox from './combobox';
+import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 
 export default class Autocomplete {
   element: AutoCompleteElement;
@@ -153,14 +154,4 @@ function syncSelection(autocomplete: Autocomplete) {
 
 function selected(option: HTMLElement) {
   return option.getAttribute('aria-selected') === 'true';
-}
-
-function useOutsideInteraction(callback: (event: Event) => void, options = false) {
-  document.addEventListener('pointerdown', callback, options);
-  window.addEventListener('focusin', callback, options);
-
-  return () => {
-    document.removeEventListener('pointerdown', callback, options);
-    window.removeEventListener('focusin', callback, options);
-  };
 }
