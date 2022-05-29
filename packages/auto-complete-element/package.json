@@ -9,8 +9,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "web-dev-server --open examples/",
-    "build": "tsc && node esbuild.config.js --watch",
-    "clean": "rm -rf ./dist"
+    "build": "tsc && node esbuild.config.mjs --watch",
+    "clean": "rm -rf ./dist",
+    "prepublishOnly": "tsc && node esbuild.config.mjs",
+    "publish": "npm publish --access=public"
   },
   "files": [
     "dist"

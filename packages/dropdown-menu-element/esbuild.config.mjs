@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('esbuild')
+import esbuild from 'esbuild';
+
+esbuild
   .build({
     entryPoints: ['src/index.ts'],
     outfile: 'dist/index.js',
