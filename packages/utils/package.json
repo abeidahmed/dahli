@@ -1,10 +1,9 @@
 {
   "name": "@dahli/utils",
   "version": "1.0.0",
-  "description": "A set or utilities used within the application",
+  "description": "A set of utilities/helpers used within the packages.",
   "keywords": [
     "utils"
   ],
-  "author": "",
   "license": "MIT"
 }
