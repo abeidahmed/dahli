@@ -11,7 +11,7 @@ npm install @dahli/clippy-copy-element
 ## Usage
 
 ```js
-import @dahli/clippy-copy-element
+import '@dahli/clippy-copy-element'
 ```
 
 ### Copying an input's value

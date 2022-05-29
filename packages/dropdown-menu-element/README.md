@@ -11,7 +11,7 @@ npm install @dahli/dropdown-menu-element
 ## Usage
 
 ```js
-import @dahli/dropdown-menu-element
+import '@dahli/dropdown-menu-element'
 ```
 
 ### Markup

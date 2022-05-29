@@ -11,7 +11,7 @@ npm install @dahli/details-modal-element
 ## Usage
 
 ```js
-import @dahli/details-modal-element
+import '@dahli/details-modal-element'
 ```
 
 ### Markup
