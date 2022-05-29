@@ -81,12 +81,8 @@ export default class Combobox {
   }
 
   onClick(event: Event) {
-    const { target } = event;
-    if (!(target instanceof HTMLElement)) return;
-
-    const option = target.closest<HTMLElement>('[role="option"]');
-    if (!(option instanceof HTMLElement)) return;
-    if (!enabled(option)) return;
+    const option = getClosestOptionFrom(event.target);
+    if (!option || !enabled(option)) return;
 
     this.selectOption(option);
     option.dispatchEvent(new CustomEvent('combobox:commit', { bubbles: true }));
@@ -98,7 +94,7 @@ export default class Combobox {
       return;
     }
 
-    const option = getClosestOptionFrom(event.target as HTMLElement);
+    const option = getClosestOptionFrom(event.target);
     if (!option) return;
 
     this.setActive(option);
@@ -108,7 +104,7 @@ export default class Combobox {
     if (this.isMouseMoving) return;
 
     this.isMouseMoving = true;
-    const option = getClosestOptionFrom(event.target as HTMLElement);
+    const option = getClosestOptionFrom(event.target);
     if (!option) return;
 
     this.setActive(option);
@@ -196,7 +192,7 @@ function commit(list: HTMLElement) {
   return true;
 }
 
-function getClosestOptionFrom(target: HTMLElement) {
+function getClosestOptionFrom(target: HTMLElement | EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false;
 
   const option = target.closest<HTMLElement>('[role="option"]');
