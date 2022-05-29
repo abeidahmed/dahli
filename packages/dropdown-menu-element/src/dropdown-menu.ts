@@ -35,8 +35,7 @@ export default class DropdownMenu {
     this.details.addEventListener('mousedown', this.onMousedown);
     this.details.addEventListener('click', this.commitItem);
 
-    document.addEventListener('mousedown', this.closeOnOutsideInteraction);
-    document.addEventListener('touchstart', this.closeOnOutsideInteraction);
+    document.addEventListener('pointerdown', this.closeOnOutsideInteraction);
     window.addEventListener('focusin', this.closeOnOutsideInteraction);
   }
 
@@ -46,8 +45,7 @@ export default class DropdownMenu {
     this.details.removeEventListener('mousedown', this.onMousedown);
     this.details.removeEventListener('click', this.commitItem);
 
-    document.removeEventListener('mousedown', this.closeOnOutsideInteraction);
-    document.removeEventListener('touchstart', this.closeOnOutsideInteraction);
+    document.removeEventListener('pointerdown', this.closeOnOutsideInteraction);
     window.removeEventListener('focusin', this.closeOnOutsideInteraction);
   }
 
