@@ -1,7 +1,12 @@
 {
   "name": "@dahli/dropdown-menu-element",
   "version": "0.1.0",
-  "description": "A dropdown-menu built with the <details> tag",
+  "description": "A dropdown-menu built with the <details> tag.",
+  "repository": "abeidahmed/dahli/tree/main/packages/dropdown-menu-element",
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "web-dev-server --open examples/",
     "build": "tsc && node esbuild.config.js --watch",
@@ -10,13 +15,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
   "keywords": [
     "dropdown",
     "menu",
-    "details"
+    "details",
+    "menubar"
   ],
-  "author": "",
   "license": "MIT",
   "devDependencies": {
     "@dahli/utils": "1.0.0"
