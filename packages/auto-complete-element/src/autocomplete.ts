@@ -52,6 +52,7 @@ export default class Autocomplete {
   onListToggle() {
     if (this.list.hidden) {
       this.combobox.stop();
+      this.list.removeAttribute('data-empty');
       syncSelection(this);
     } else {
       this.combobox.start();
@@ -154,13 +155,12 @@ function filterOptions(query: string, { matching }: { matching: string }) {
 
 function syncSelection(autocomplete: Autocomplete) {
   const { combobox, input, isMultiple } = autocomplete;
-  if (isMultiple) {
+  const selectedOption = combobox.options.filter(selected)[0];
+
+  if (isMultiple || !selectedOption) {
     input.value = '';
   } else {
-    const selectedOption = combobox.options.filter(selected)[0];
-    if (selectedOption) {
-      input.value = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || selectedOption.textContent) as string;
-    }
+    input.value = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || selectedOption.textContent) as string;
   }
 }
 
