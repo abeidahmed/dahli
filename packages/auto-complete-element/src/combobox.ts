@@ -5,14 +5,16 @@ const ctrlBindings = !!navigator.userAgent.match(/Macintosh/);
 export default class Combobox {
   input: HTMLInputElement;
   list: HTMLElement;
+  isMultiple: boolean;
   // Combobox does not use an actual hover/focus because it is not possible to focus input and options elements at the
   // same time. So for the options, it uses `data-tracking` to mimic mouse hover. But `data-tracking` is also activated
   // when ArrowDown and ArrowUp key is pressed. This distinction will help us know how the tracking is done.
   isMouseMoving = false;
 
-  constructor(input: HTMLInputElement, list: HTMLElement) {
+  constructor(input: HTMLInputElement, list: HTMLElement, { isMultiple = false } = {}) {
     this.input = input;
     this.list = list;
+    this.isMultiple = isMultiple;
 
     if (!this.list.id) this.list.id = brandedId();
 
@@ -22,6 +24,9 @@ export default class Combobox {
     this.input.setAttribute('aria-controls', this.list.id);
     this.input.setAttribute('aria-autocomplete', 'list');
     this.list.setAttribute('role', 'listbox');
+    if (this.isMultiple) {
+      this.list.setAttribute('aria-multiselectable', 'true');
+    }
 
     this.onKeydown = this.onKeydown.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -129,8 +134,12 @@ export default class Combobox {
   }
 
   selectOption(option: HTMLElement) {
-    for (const el of this.options.filter(enabled)) {
-      el.setAttribute('aria-selected', (el === option).toString());
+    if (this.isMultiple) {
+      option.setAttribute('aria-selected', (option.getAttribute('aria-selected') !== 'true').toString());
+    } else {
+      for (const el of this.options.filter(enabled)) {
+        el.setAttribute('aria-selected', (el === option).toString());
+      }
     }
   }
 
