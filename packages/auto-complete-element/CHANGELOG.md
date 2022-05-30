@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-- Add support for multiple selections #10
-- Add `data-empty` attribute when search results is empty #10
-- Add `debounce` on input filter #10
+- Add support for multiple selections [#10](https://github.com/abeidahmed/dahli/pull/10)
+- Add `data-empty` attribute when search results is empty [#10](https://github.com/abeidahmed/dahli/pull/10)
+- Add `debounce` on input filter [#10](https://github.com/abeidahmed/dahli/pull/10)
 
 ## [0.1.1] - 2022-05-30
 
