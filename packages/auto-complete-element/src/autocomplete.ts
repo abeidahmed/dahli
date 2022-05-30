@@ -4,6 +4,7 @@ import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 import { debounce } from '@dahli/utils/src/delay';
 
 const AUTOCOMPLETE_VALUE_ATTR = 'data-autocomplete-value';
+const DATA_EMPTY_ATTR = 'data-empty';
 
 export default class Autocomplete {
   element: AutoCompleteElement;
@@ -52,7 +53,7 @@ export default class Autocomplete {
   onListToggle() {
     if (this.list.hidden) {
       this.combobox.stop();
-      this.list.removeAttribute('data-empty');
+      this.list.removeAttribute(DATA_EMPTY_ATTR);
       syncSelection(this);
     } else {
       this.combobox.start();
@@ -105,7 +106,7 @@ export default class Autocomplete {
     const query = this.input.value.trim();
     this.combobox.options.forEach(filterOptions(query, { matching: AUTOCOMPLETE_VALUE_ATTR }));
     this.combobox.setActive(this.combobox.visibleOptions[0]);
-    this.list.toggleAttribute('data-empty', this.combobox.visibleOptions.length === 0);
+    this.list.toggleAttribute(DATA_EMPTY_ATTR, this.combobox.visibleOptions.length === 0);
   }
 
   onCommit(event: Event) {
