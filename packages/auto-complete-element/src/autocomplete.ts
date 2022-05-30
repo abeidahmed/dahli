@@ -1,6 +1,7 @@
 import type AutoCompleteElement from './index';
 import Combobox from './combobox';
 import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
+import { debounce } from '@dahli/utils/src/delay';
 
 export default class Autocomplete {
   element: AutoCompleteElement;
@@ -25,7 +26,7 @@ export default class Autocomplete {
     this.onFocus = this.onFocus.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
-    this.onInput = this.onInput.bind(this);
+    this.onInput = debounce(this.onInput.bind(this), 300);
 
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('keydown', this.onKeydown);
