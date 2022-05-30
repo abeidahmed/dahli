@@ -77,6 +77,37 @@ the blankslate like this:
 }
 ```
 
+### Selections via `aria-selected="true"` attribute
+
+`aria-selected="true"` is set on the selected option which can be used to differentiate the selected elements from
+the non-selected elements visually via CSS.
+
+```html
+<auto-complete for="list">
+  <input type="text">
+  <ul id="list">
+    <li role="option" aria-selected="true">
+      Option 1
+      <span>(selected)</span>
+    </li>
+    <li role="option">
+      Option 2
+      <span>(selected)</span>
+    </li>
+  </ul>
+</auto-complete>
+```
+
+```css
+li[role="option"] > span {
+  display: none;
+}
+
+li[role="option"][aria-selected="true"] > span {
+  display: inline-block;
+}
+```
+
 ### Events
 `auto-complete:selected` is fired after an option is selected. You can find which option was selected
 by:
