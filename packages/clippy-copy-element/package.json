@@ -1,8 +1,17 @@
 {
   "name": "@dahli/clippy-copy-element",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A clipboard element to copy text content, input values, and more.",
-  "repository": "abeidahmed/dahli/tree/main/packages/clippy-copy-element",
+  "homepage": "https://github.com/abeidahmed/dahli/tree/main/packages/clippy-copy-element#readme",
+  "bugs": "https://github.com/abeidahmed/dahli/issues?q=is%3Aopen+is%3Aissue+label%3Aclippy-copy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abeidahmed/dahli",
+    "directory": "packages/clippy-copy-element"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -11,8 +20,7 @@
     "start": "web-dev-server --open examples/",
     "build": "tsc && node esbuild.config.mjs --watch",
     "clean": "rm -rf ./dist",
-    "prepublishOnly": "tsc && node esbuild.config.mjs",
-    "publish": "npm publish --access=public"
+    "prepublishOnly": "tsc && node esbuild.config.mjs"
   },
   "files": [
     "dist"
