@@ -35,11 +35,17 @@
       li[data-tracking] {
         background-color: gray;
       }
+
+      input {
+        display: block;
+        width: 100%;
+      }
     </style>
   </head>
 
   <body class="container-sm py-6">
-    <auto-complete for="options">
+    <h3>Multi select</h3>
+    <auto-complete for="options" multiple style="display: block;">
       <input type="text" class="form-control">
 
       <ul id="options">
@@ -93,6 +99,27 @@
         </li>
       </ul>
     </auto-complete>
+
+    <h3 style="margin-top: 40px;">Single select</h3>
+    <auto-complete for="users" style="display: block;">
+      <input type="text" class="form-control">
+
+      <ul id="users">
+        <li role="option" data-autocomplete-value="Tim">
+          Tim
+          <span>(checked)</span>
+        </li>
+        <li role="option" data-autocomplete-value="Mike">
+          Mike
+          <span>(checked)</span>
+        </li>
+        <li role="option" data-autocomplete-value="Kene">
+          Kene
+          <span>(checked)</span>
+        </li>
+      </ul>
+    </auto-complete>
+
     <script src="../dist/index.js"></script>
   </body>
 </html>

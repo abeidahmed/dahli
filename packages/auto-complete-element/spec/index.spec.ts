@@ -206,4 +206,35 @@ describe('AutoCompleteElement', () => {
       expect(relatedTarget).to.equal(options[1]);
     });
   });
+
+  describe('multiple selections', () => {
+    let el: AutoCompleteElement;
+    let input: HTMLInputElement;
+    let list: HTMLElement;
+    let options: NodeListOf<HTMLElement>;
+
+    beforeEach(async () => {
+      el = await fixture(html`
+        <auto-complete for="list" multiple>
+          <input type="text" />
+          <ul id="list">
+            <li role="option">Player</li>
+            <li role="option" data-autocomplete-value="Orange">Taxi</li>
+          </ul>
+        </auto-complete>
+      `);
+
+      input = el.querySelector('input');
+      list = el.querySelector('ul');
+      options = list.querySelectorAll('[role="option"]');
+    });
+
+    it('does not close the list and does not update the input value', () => {
+      input.focus();
+
+      options[0].dispatchEvent(new CustomEvent('combobox:commit', { bubbles: true }));
+      expect(input.value).to.equal(''); // does not update the input value
+      expect(list).not.to.have.attribute('hidden'); // does not hide the input
+    });
+  });
 });

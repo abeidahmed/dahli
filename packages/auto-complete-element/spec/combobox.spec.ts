@@ -51,6 +51,7 @@ describe('Combobox', () => {
       expect(input).to.have.attribute('aria-controls', list.id);
       expect(input).to.have.attribute('aria-autocomplete', 'list');
       expect(list).to.have.attribute('role', 'listbox');
+      expect(list).not.to.have.attribute('aria-multiselectable');
     });
 
     it('on starting combobox', () => {
@@ -265,6 +266,52 @@ describe('Combobox', () => {
 
       mouseover(options[2]);
       expectInputLinkedWithOption(input, options[2]);
+    });
+  });
+
+  describe('multiple selections', () => {
+    let el: HTMLElement;
+    let input: HTMLInputElement;
+    let list: HTMLElement;
+    let options: NodeListOf<HTMLElement>;
+    let combobox: Combobox;
+
+    beforeEach(async () => {
+      el = await fixture(html`
+        <div>
+          <input type="text" />
+          <ul>
+            <li role="option">Player</li>
+            <li role="option">Taxi</li>
+          </ul>
+        </div>
+      `);
+
+      input = el.querySelector('input');
+      list = el.querySelector('ul');
+      options = list.querySelectorAll<HTMLElement>('[role="option"]');
+      combobox = new Combobox(input, list, { isMultiple: true });
+    });
+
+    afterEach(() => {
+      combobox.stop();
+    });
+
+    it('adds aria-multiselectable', () => {
+      expect(list).to.have.attribute('aria-multiselectable', 'true');
+    });
+
+    it('selecting options', () => {
+      combobox.start();
+
+      expect(options[0]).to.have.attribute('aria-selected', 'false');
+      expect(options[1]).to.have.attribute('aria-selected', 'false');
+
+      options[0].click();
+      expect(options[0]).to.have.attribute('aria-selected', 'true');
+
+      options[1].click();
+      expect(options[1]).to.have.attribute('aria-selected', 'true');
     });
   });
 });

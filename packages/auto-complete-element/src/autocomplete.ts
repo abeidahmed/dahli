@@ -1,11 +1,16 @@
 import type AutoCompleteElement from './index';
 import Combobox from './combobox';
 import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
+import { debounce } from '@dahli/utils/src/delay';
+
+const AUTOCOMPLETE_VALUE_ATTR = 'data-autocomplete-value';
+const DATA_EMPTY_ATTR = 'data-empty';
 
 export default class Autocomplete {
   element: AutoCompleteElement;
   input: HTMLInputElement;
   list: HTMLElement;
+  isMultiple: boolean;
   combobox: Combobox;
   listObserver: MutationObserver;
 
@@ -15,7 +20,8 @@ export default class Autocomplete {
     this.list = list;
 
     this.list.hidden = true;
-    this.combobox = new Combobox(this.input, this.list);
+    this.isMultiple = this.element.hasAttribute('multiple');
+    this.combobox = new Combobox(this.input, this.list, { isMultiple: this.isMultiple });
 
     this.input.setAttribute('spellcheck', 'false');
     this.input.setAttribute('autocomplete', 'off');
@@ -23,7 +29,7 @@ export default class Autocomplete {
     this.onFocus = this.onFocus.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
-    this.onInput = this.onInput.bind(this);
+    this.onInput = debounce(this.onInput.bind(this), 300);
 
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('keydown', this.onKeydown);
@@ -47,6 +53,7 @@ export default class Autocomplete {
   onListToggle() {
     if (this.list.hidden) {
       this.combobox.stop();
+      this.list.removeAttribute(DATA_EMPTY_ATTR);
       syncSelection(this);
     } else {
       this.combobox.start();
@@ -57,7 +64,7 @@ export default class Autocomplete {
     if (!this.list.hidden) return;
 
     this.list.hidden = false;
-    this.combobox.options.forEach(filterOptions('', { matching: 'data-autocomplete-value' }));
+    this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
     activateFirstOption(this);
   }
 
@@ -73,7 +80,7 @@ export default class Autocomplete {
       case 'ArrowDown':
         if (event.altKey && this.list.hidden) {
           this.list.hidden = false;
-          this.combobox.options.forEach(filterOptions('', { matching: 'data-autocomplete-value' }));
+          this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
           activateFirstOption(this);
           event.preventDefault();
           event.stopPropagation();
@@ -97,17 +104,20 @@ export default class Autocomplete {
     }
 
     const query = this.input.value.trim();
-    this.combobox.options.forEach(filterOptions(query, { matching: 'data-autocomplete-value' }));
+    this.combobox.options.forEach(filterOptions(query, { matching: AUTOCOMPLETE_VALUE_ATTR }));
     this.combobox.setActive(this.combobox.visibleOptions[0]);
+    this.list.toggleAttribute(DATA_EMPTY_ATTR, this.combobox.visibleOptions.length === 0);
   }
 
   onCommit(event: Event) {
     const option = event.target;
     if (!(option instanceof HTMLElement)) return;
 
-    const value = (option.getAttribute('data-autocomplete-value') || option.textContent) as string;
-    this.input.value = value;
-    this.list.hidden = true;
+    const value = (option.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || option.textContent) as string;
+    if (!this.isMultiple) {
+      this.input.value = value;
+      this.list.hidden = true;
+    }
 
     this.list.dispatchEvent(
       new CustomEvent('auto-complete:selected', {
@@ -145,10 +155,13 @@ function filterOptions(query: string, { matching }: { matching: string }) {
 }
 
 function syncSelection(autocomplete: Autocomplete) {
-  const { combobox, input } = autocomplete;
+  const { combobox, input, isMultiple } = autocomplete;
   const selectedOption = combobox.options.filter(selected)[0];
-  if (selectedOption) {
-    input.value = (selectedOption.getAttribute('data-autocomplete-value') || selectedOption.textContent) as string;
+
+  if (isMultiple || !selectedOption) {
+    input.value = '';
+  } else {
+    input.value = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || selectedOption.textContent) as string;
   }
 }
 
