@@ -3,6 +3,8 @@ import Combobox from './combobox';
 import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 import { debounce } from '@dahli/utils/src/delay';
 
+const AUTOCOMPLETE_VALUE_ATTR = 'data-autocomplete-value';
+
 export default class Autocomplete {
   element: AutoCompleteElement;
   input: HTMLInputElement;
@@ -60,7 +62,7 @@ export default class Autocomplete {
     if (!this.list.hidden) return;
 
     this.list.hidden = false;
-    this.combobox.options.forEach(filterOptions('', { matching: 'data-autocomplete-value' }));
+    this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
     activateFirstOption(this);
   }
 
@@ -76,7 +78,7 @@ export default class Autocomplete {
       case 'ArrowDown':
         if (event.altKey && this.list.hidden) {
           this.list.hidden = false;
-          this.combobox.options.forEach(filterOptions('', { matching: 'data-autocomplete-value' }));
+          this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
           activateFirstOption(this);
           event.preventDefault();
           event.stopPropagation();
@@ -100,7 +102,7 @@ export default class Autocomplete {
     }
 
     const query = this.input.value.trim();
-    this.combobox.options.forEach(filterOptions(query, { matching: 'data-autocomplete-value' }));
+    this.combobox.options.forEach(filterOptions(query, { matching: AUTOCOMPLETE_VALUE_ATTR }));
     this.combobox.setActive(this.combobox.visibleOptions[0]);
     this.list.toggleAttribute('data-empty', this.combobox.visibleOptions.length === 0);
   }
@@ -109,7 +111,7 @@ export default class Autocomplete {
     const option = event.target;
     if (!(option instanceof HTMLElement)) return;
 
-    const value = (option.getAttribute('data-autocomplete-value') || option.textContent) as string;
+    const value = (option.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || option.textContent) as string;
     if (!this.isMultiple) {
       this.input.value = value;
       this.list.hidden = true;
@@ -157,7 +159,7 @@ function syncSelection(autocomplete: Autocomplete) {
   } else {
     const selectedOption = combobox.options.filter(selected)[0];
     if (selectedOption) {
-      input.value = (selectedOption.getAttribute('data-autocomplete-value') || selectedOption.textContent) as string;
+      input.value = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || selectedOption.textContent) as string;
     }
   }
 }
