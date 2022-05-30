@@ -101,6 +101,7 @@ export default class Autocomplete {
     const query = this.input.value.trim();
     this.combobox.options.forEach(filterOptions(query, { matching: 'data-autocomplete-value' }));
     this.combobox.setActive(this.combobox.visibleOptions[0]);
+    this.list.toggleAttribute('data-empty', this.combobox.visibleOptions.length === 0);
   }
 
   onCommit(event: Event) {
