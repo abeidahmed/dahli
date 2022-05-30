@@ -12,9 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `data-empty` attribute when there is zero search results
 - Add `debounce` on input filter
 
-### Added
-- Add multi select support
-
 ## [0.1.0] - 2022-05-29
 
 ### Added
