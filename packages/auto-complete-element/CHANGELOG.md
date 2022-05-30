@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add support for multiple selections
 - Add `data-empty` attribute when there is zero search results
+- Add `debounce` on input filter
 
 ### Added
 - Add multi select support
