@@ -1,6 +1,6 @@
 {
   "name": "@dahli/dropdown-menu-element",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A dropdown-menu built with the <details> tag.",
   "homepage": "https://github.com/abeidahmed/dahli/tree/main/packages/dropdown-menu-element#readme",
   "bugs": "https://github.com/abeidahmed/dahli/issues?q=is%3Aopen+is%3Aissue+label%3Adropdown-menu",
