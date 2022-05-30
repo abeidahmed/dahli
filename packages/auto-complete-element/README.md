@@ -27,10 +27,54 @@ import '@dahli/auto-complete-element'
 </auto-complete>
 ```
 
+#### Multiple selections
+
+You can set the `multiple` attribute on the `<auto-complete>` to allow selections on multiple options.
+
+```html
+<auto-complete for="list" multiple>
+  <input type="text">
+  <ul id="list">
+    <li role="option">Option 1</li>
+    <li role="option">Option 2</li>
+    <li role="option">Option 3</li>
+  </ul>
+</auto-complete>
+```
+
+### Filtering options
+
+The default filtering logic is substring.
+
 The `data-autocomplete-value` can be used to customize the search term.
 
 ```html
-<li role="option" data-autocomplete-value="another option">Option<li>
+<li role="option" data-autocomplete-value="Battlestar">Option<li>
+```
+
+#### Blankslate
+
+`data-empty` attribute is added to the list container when search results is empty. You can use CSS to show/hide
+the blankslate like this:
+
+```html
+<auto-complete for="list">
+  <input type="text">
+  <ul id="list" class="container">
+    <li role="option">Option 1</li>
+    <li class="blankslate">No results found!</li>
+  </ul>
+</auto-complete>
+```
+
+```css
+.blankslate {
+  display: none;
+}
+
+.container[data-empty] .blankslate {
+  display: block;
+}
 ```
 
 ### Events
@@ -45,9 +89,6 @@ autocomplete.addEventListener('auto-complete:selected', (event) => {
   console.log(option);
 });
 ```
-
-### Todo
-- [ ] Support multi-select
 
 ## License
 Distributed under the MIT license.
