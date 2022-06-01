@@ -13,7 +13,7 @@
       <summary class="btn">Open dialog</summary>
       <details-modal class="Box Box--overlay d-flex flex-column position-fixed" style="left: 50%; transform: translateX(-50%); z-index: 9999; top: 20%;">
         <div class="Box-header">
-          <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
+          <button data-modal-close class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
           <h3 class="Box-title">Box title</h3>
         </div>
 
@@ -35,7 +35,7 @@
         <summary class="btn">Open dialog with form</summary>
         <details-modal class="Box Box--overlay d-flex flex-column position-fixed" style="left: 50%; transform: translateX(-50%); z-index: 9999; top: 20%;">
           <div class="Box-header">
-            <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
+            <button data-modal-close class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog">Close</button>
             <h3 class="Box-title">Box title</h3>
           </div>
 
@@ -46,7 +46,7 @@
               </div>
 
               <div class="form-group-group">
-                <input type="text" class="form-control width-full">
+                <input type="text" class="form-control width-full" autofocus>
               </div>
 
               <button type="submit" class="btn btn-block mt-3">Submit form</button>

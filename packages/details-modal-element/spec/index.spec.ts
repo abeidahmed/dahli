@@ -14,7 +14,7 @@ describe('DetailsModalElement', () => {
           <summary>Summary</summary>
           <details-modal>
             <h1>A modal</h1>
-            <button type="button" autofocus>Button</button>
+            <button type="button" autofocus data-modal-close>Button</button>
           </details-modal>
         </details>
       `);
@@ -31,7 +31,6 @@ describe('DetailsModalElement', () => {
 
     it('focuses on the summary after closing the modal', async () => {
       el.open = true;
-      await waitForToggle(el);
       expect(el.open).to.equal(true);
 
       el.open = false;
@@ -42,11 +41,19 @@ describe('DetailsModalElement', () => {
 
     it('closes the modal with the Escape key', async () => {
       el.open = true;
-      await waitForToggle(el);
       expect(el.open).to.equal(true);
 
       modal.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-      await waitForToggle(el);
+      expect(el.open).to.equal(false);
+      expect(document.activeElement).to.equal(summary);
+    });
+
+    it('closes the modal when data-modal-close is clicked', async () => {
+      el.open = true;
+      expect(el.open).to.equal(true);
+
+      const closeButton = el.querySelector<HTMLElement>('[data-modal-close]');
+      closeButton.click();
       expect(el.open).to.equal(false);
       expect(document.activeElement).to.equal(summary);
     });
