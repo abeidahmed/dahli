@@ -15,12 +15,14 @@ export default class DetailsModalElement extends HTMLElement {
 
     this.details.addEventListener('toggle', onToggle);
     this.details.addEventListener('keydown', onKeydown);
+    this.details.addEventListener('click', onClick);
   }
 
   disconnectedCallback() {
     if (this.details) {
       this.details.removeEventListener('toggle', onToggle);
       this.details.removeEventListener('keydown', onKeydown);
+      this.details.removeEventListener('click', onClick);
     }
   }
 }
@@ -41,6 +43,17 @@ function onKeydown(event: KeyboardEvent) {
     close(details);
     event.preventDefault();
     event.stopPropagation();
+  }
+}
+
+function onClick(event: Event) {
+  const { target } = event;
+  if (!(target instanceof HTMLElement)) return;
+
+  const details = target.closest('details');
+  if (!details) return;
+  if (target.closest('[data-modal-close]')) {
+    close(details);
   }
 }
 
