@@ -38,6 +38,14 @@ Initial focus can be changed with the `autofocus` attribute.
 </details>
 ```
 
+### Closing the modal
+
+Modal can be closed using the `data-modal-close` attribute.
+
+```html
+<button type="button" data-modal-close>Close modal</button>
+```
+
 Modal can be closed using the `method="dialog"` attribute on the `<form>`.
 
 ```html
