@@ -130,6 +130,7 @@ export default class Autocomplete {
   closeOnOutsideInteraction(event: Event) {
     if (this.list.hidden) return;
     if (this.element.contains(event.target as HTMLElement)) return;
+    if (this.list.contains(event.target as HTMLElement)) return;
 
     this.list.hidden = true;
   }
