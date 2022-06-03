@@ -7,20 +7,19 @@ export default class TabListElement extends HTMLElement {
     this.setAttribute('role', 'tablist');
 
     // Force at least one active tab
-    const initialActiveTabs = this.tabs.filter((tab) => tab.getAttribute('aria-selected') === 'true');
-    if (initialActiveTabs.length === 0) {
+    if (this.tabs.filter(active).length === 0) {
       this.tabs[0].setAttribute('aria-selected', 'true');
     }
 
     for (const tab of this.tabs) {
       if (!tab.id) tab.id = brandedId();
-      const panelId = tab.getAttribute('aria-controls');
+      const panelId = getPanelIdFromTab(tab);
       if (panelId) {
         const panel = document.getElementById(panelId);
         panel?.setAttribute('aria-labelledby', tab.id);
       }
 
-      if (tab.getAttribute('aria-selected') === 'true') {
+      if (active(tab)) {
         tab.setAttribute('tabindex', '0');
         this.tabGroup?.setAttribute(ACTIVE_PANEL_ID_ATTR, panelId || '');
       } else {
@@ -91,7 +90,7 @@ export default class TabListElement extends HTMLElement {
 
     for (const tab of this.tabs) {
       if (tab === activeTab) {
-        const controlledPanelId = tab.getAttribute('aria-controls');
+        const controlledPanelId = getPanelIdFromTab(tab);
         if (!controlledPanelId) return;
 
         const panel = document.getElementById(controlledPanelId);
@@ -117,7 +116,7 @@ export default class TabListElement extends HTMLElement {
   }
 
   get activeTab() {
-    return this.tabs.find((tab) => tab.getAttribute('aria-selected') === 'true');
+    return this.tabs.find(active);
   }
 
   get tabGroup() {
@@ -125,8 +124,16 @@ export default class TabListElement extends HTMLElement {
   }
 }
 
+function active(tab: HTMLElement) {
+  return tab.getAttribute('aria-selected') === 'true';
+}
+
 function selectable(tab: HTMLElement) {
   return !tab.hidden && !tab.hasAttribute('disabled');
+}
+
+function getPanelIdFromTab(tab: HTMLElement) {
+  return tab.getAttribute('aria-controls');
 }
 
 declare global {
