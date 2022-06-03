@@ -18,7 +18,22 @@
 
       <tab-panel>
         <div id="panel-1" role="tabpanel">
-          This is panel 1
+          <tab-group>
+            <tab-list>
+              <button type="button" role="tab" aria-controls="nested-1" aria-selected="true">Nested tab 1</button>
+              <button type="button" role="tab" aria-controls="nested-2">Nested tab 2</button>
+            </tab-list>
+
+            <tab-panel>
+              <div id="nested-1" role="tabpanel">
+                Nested panel 1
+              </div>
+
+              <div id="nested-2" role="tabpanel" hidden>
+                Nested panel 2
+              </div>
+            </tab-panel>
+          </tab-group>
         </div>
 
         <div id="panel-2" role="tabpanel" hidden>

@@ -25,7 +25,10 @@ export default class TabGroupElement extends HTMLElement {
   }
 
   get panels() {
-    return Array.from(this.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    return Array.from(this.querySelectorAll<HTMLElement>('[role="tabpanel"]')).filter(
+      // Keep nested tab group state as it is
+      (panel) => panel.closest('tab-group') === this
+    );
   }
 }
 
