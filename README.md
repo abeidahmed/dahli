@@ -2,6 +2,9 @@
 
 A collection of everyday Web Components.
 
+> All the components follow [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/). If
+anything doesn't align with these guidelines, please open an [issue](https://github.com/abeidahmed/dahli/issues?q=is%3Aopen+is%3Aissue+label%3AAPG).
+
 ## Motivation for creating the components
 
 Whenever I start a new project, I realized that I keep copying the same set of components from my previous project.

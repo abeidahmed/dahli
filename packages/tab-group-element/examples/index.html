@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tab Group Element</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body>
+    <tab-group>
+      <tab-list>
+        <button type="button" role="tab" aria-controls="panel-1" aria-selected="true">Tab 1</button>
+        <button type="button" role="tab" aria-controls="panel-2">Tab 2</button>
+        <button type="button" role="tab" aria-controls="panel-3" disabled>Tab 3</button>
+        <button type="button" role="tab" aria-controls="panel-4">Tab 4</button>
+      </tab-list>
+
+      <tab-panel>
+        <div id="panel-1" role="tabpanel">
+          <tab-group>
+            <tab-list>
+              <button type="button" role="tab" aria-controls="nested-1" aria-selected="true">Nested tab 1</button>
+              <button type="button" role="tab" aria-controls="nested-2">Nested tab 2</button>
+            </tab-list>
+
+            <tab-panel>
+              <div id="nested-1" role="tabpanel">
+                Nested panel 1
+              </div>
+
+              <div id="nested-2" role="tabpanel" hidden>
+                Nested panel 2
+              </div>
+            </tab-panel>
+          </tab-group>
+        </div>
+
+        <div id="panel-2" role="tabpanel" hidden>
+          This is panel 2
+        </div>
+
+        <div id="panel-3" role="tabpanel" hidden>
+          This is panel 3
+        </div>
+
+        <div id="panel-4" role="tabpanel" hidden>
+          This is panel 4
+        </div>
+      </tab-panel>
+    </tab-group>
+
+    <script src="../dist/index.js"></script>
+  </body>
+</html>

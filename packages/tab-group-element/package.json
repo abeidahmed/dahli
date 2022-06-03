@@ -1,0 +1,35 @@
+{
+  "name": "@dahli/tab-group-element",
+  "version": "0.1.0",
+  "description": "An accessible tabs element.",
+  "homepage": "https://github.com/abeidahmed/dahli/tree/main/packages/tab-group-element#readme",
+  "bugs": "https://github.com/abeidahmed/dahli/pulls?q=is%3Aopen+is%3Apr+label%3Atab-group",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abeidahmed/dahli",
+    "directory": "packages/tab-group-element"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "web-dev-server --open examples/",
+    "build": "tsc && node esbuild.config.mjs --watch",
+    "clean": "rm -rf ./dist",
+    "prepublishOnly": "tsc && node esbuild.config.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "tab"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@dahli/utils": "1.0.0"
+  }
+}
