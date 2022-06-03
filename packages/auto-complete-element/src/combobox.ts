@@ -117,8 +117,8 @@ export default class Combobox {
   }
 
   move(index: MoveIndex) {
-    const item = move(this.visibleOptions, this.activeOption, index);
-    this.setActive(item);
+    const option = move(this.visibleOptions, this.activeOption, index);
+    this.setActive(option);
   }
 
   selectOption(option: HTMLElement) {
