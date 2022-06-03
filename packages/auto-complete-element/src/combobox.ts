@@ -1,4 +1,5 @@
 import { brandedId } from '@dahli/utils/src/random-id';
+import { move, MoveIndex } from '@dahli/utils/src/dom';
 
 const ctrlBindings = !!navigator.userAgent.match(/Macintosh/);
 
@@ -115,22 +116,10 @@ export default class Combobox {
     this.setActive(option);
   }
 
-  move(index: 1 | -1) {
-    let focusIndex = this.visibleOptions.indexOf(this.activeOption);
+  move(index: MoveIndex) {
+    if (!this.activeOption) return;
 
-    if (focusIndex === this.visibleOptions.length - 1 && index === 1) {
-      focusIndex = -1;
-    }
-
-    let indexOfItem = index === 1 ? 0 : this.visibleOptions.length - 1;
-    if (this.activeOption && focusIndex >= 0) {
-      const newIndex = focusIndex + index;
-      if (newIndex >= 0 && newIndex < this.visibleOptions.length) {
-        indexOfItem = newIndex;
-      }
-    }
-
-    this.setActive(this.visibleOptions[indexOfItem]);
+    return move(this.visibleOptions, this.activeOption, index);
   }
 
   selectOption(option: HTMLElement) {
@@ -179,7 +168,7 @@ export default class Combobox {
     }
   }
 
-  get activeOption() {
+  get activeOption(): HTMLElement | undefined {
     return Array.from(this.list.querySelectorAll<HTMLElement>('[data-tracking]'))[0];
   }
 
@@ -193,8 +182,8 @@ export default class Combobox {
 }
 
 function commit(list: HTMLElement) {
-  const activeOption = list.querySelector('[data-tracking]');
-  if (!(activeOption instanceof HTMLElement)) return false;
+  const activeOption = list.querySelector<HTMLElement>('[data-tracking]');
+  if (!activeOption) return false;
   if (!enabled(activeOption)) return false;
 
   activeOption.click();

@@ -1,6 +1,7 @@
 import { brandedId } from '@dahli/utils/src/random-id';
 import type DropdownMenuElement from './index';
 import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
+import { move, MoveIndex } from '@dahli/utils/src/dom';
 
 export default class DropdownMenu {
   details: HTMLDetailsElement;
@@ -94,7 +95,7 @@ export default class DropdownMenu {
             if (autofocus(this.details)) break;
           }
 
-          const target = move(this.details, 1);
+          const target = this.move(1);
           target?.focus();
         }
         break;
@@ -109,7 +110,7 @@ export default class DropdownMenu {
             const lastItem = items[items.length - 1];
             lastItem?.focus();
           } else {
-            const target = move(this.details, -1);
+            const target = this.move(-1);
             target?.focus();
           }
         }
@@ -137,6 +138,14 @@ export default class DropdownMenu {
     if (this.details.contains(event.target as HTMLElement)) return;
     close(this.details);
   }
+
+  move(index: MoveIndex) {
+    const items = focusableItems(this.details);
+    const activeItem = document.activeElement;
+    if (!(activeItem instanceof HTMLElement)) return;
+
+    return move(items, activeItem, index);
+  }
 }
 
 function commit(item: HTMLElement, details: HTMLDetailsElement) {
@@ -146,25 +155,6 @@ function commit(item: HTMLElement, details: HTMLDetailsElement) {
 
   close(details);
   menu.dispatchEvent(new CustomEvent('dropdown-menu:selected', { detail: { relatedTarget: item } }));
-}
-
-function move(details: HTMLDetailsElement, index: 1 | -1): HTMLElement | undefined {
-  const items = focusableItems(details);
-  const activeItem = document.activeElement;
-
-  let focusIndex = activeItem instanceof HTMLElement ? items.indexOf(activeItem) : -1;
-  const atExtreme = focusIndex === items.length - 1 && index === 1;
-  if (atExtreme) focusIndex = -1;
-
-  let indexOfItem = index === 1 ? 0 : items.length - 1;
-  if (focusIndex >= 0) {
-    const newIndex = focusIndex + index;
-    if (newIndex >= 0 && newIndex < items.length) {
-      indexOfItem = newIndex;
-    }
-  }
-
-  return items[indexOfItem];
 }
 
 function autofocus(details: HTMLDetailsElement): boolean {
