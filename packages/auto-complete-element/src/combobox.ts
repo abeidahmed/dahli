@@ -117,9 +117,8 @@ export default class Combobox {
   }
 
   move(index: MoveIndex) {
-    if (!this.activeOption) return;
-
-    return move(this.visibleOptions, this.activeOption, index);
+    const item = move(this.visibleOptions, this.activeOption, index);
+    this.setActive(item);
   }
 
   selectOption(option: HTMLElement) {
@@ -168,7 +167,7 @@ export default class Combobox {
     }
   }
 
-  get activeOption(): HTMLElement | undefined {
+  get activeOption() {
     return Array.from(this.list.querySelectorAll<HTMLElement>('[data-tracking]'))[0];
   }
 
