@@ -5,6 +5,7 @@
       "@dahli/details-modal-element": ["./packages/details-modal-element/src"],
       "@dahli/auto-complete-element": ["./packages/auto-complete-element/src"],
       "@dahli/dropdown-menu-element": ["./packages/dropdown-menu-element/src"],
+      "@dahli/tab-group-element": ["./packages/tab-group-element/src"],
       "@dahli/utils": ["./packages/utils/src"]
     }
   },
@@ -13,6 +14,7 @@
     "./packages/details-modal-element/src/**/.ts",
     "./packages/auto-complete-element/src/**/.ts",
     "./packages/dropdown-menu-element/src/**/.ts",
+    "./packages/tab-group-element/src/**/.ts",
     "./packages/utils/src/**/.ts"
   ]
 }
