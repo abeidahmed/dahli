@@ -80,9 +80,10 @@ export default class TabListElement extends HTMLElement {
   }
 
   move(index: MoveIndex) {
-    if (!this.activeTab) return;
+    const activeTab = this.tabs.find(active);
+    if (!activeTab) return;
 
-    return move(this.tabs, this.activeTab, index);
+    return move(this.tabs, activeTab, index);
   }
 
   selectTab(activeTab: HTMLElement) {
@@ -113,10 +114,6 @@ export default class TabListElement extends HTMLElement {
 
   get tabs() {
     return Array.from(this.querySelectorAll<HTMLElement>('[role="tab"]')).filter(selectable);
-  }
-
-  get activeTab() {
-    return this.tabs.find(active);
   }
 
   get tabGroup() {
