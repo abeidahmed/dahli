@@ -2,6 +2,8 @@
 
 Single and multi auto-complete component.
 
+[![Edit auto-complete-element](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/auto-complete-element-t7hz4r?fontsize=14&hidenavigation=1&theme=dark)
+
 ## Installation
 
 ```bash
