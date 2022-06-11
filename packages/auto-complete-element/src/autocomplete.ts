@@ -116,7 +116,7 @@ export default class Autocomplete {
 
     const value = (option.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || option.textContent) as string;
     if (!this.isMultiple) {
-      this.input.value = value;
+      this.inputValue = value;
       this.list.hidden = true;
     }
 
@@ -134,6 +134,11 @@ export default class Autocomplete {
     if (this.list.contains(event.target as HTMLElement)) return;
 
     this.list.hidden = true;
+  }
+
+  set inputValue(value: string) {
+    this.input.value = value;
+    this.input.dispatchEvent(new Event('change'));
   }
 }
 
@@ -158,13 +163,14 @@ function filterOptions(query: string, { matching }: { matching: string }) {
 }
 
 function syncSelection(autocomplete: Autocomplete) {
-  const { combobox, input, isMultiple } = autocomplete;
+  const { combobox, isMultiple } = autocomplete;
   const selectedOption = combobox.options.filter(selected)[0];
 
   if (isMultiple || !selectedOption) {
-    input.value = '';
+    autocomplete.inputValue = '';
   } else {
-    input.value = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || selectedOption.textContent) as string;
+    autocomplete.inputValue = (selectedOption.getAttribute(AUTOCOMPLETE_VALUE_ATTR) ||
+      selectedOption.textContent) as string;
   }
 }
 
