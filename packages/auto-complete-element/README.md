@@ -19,7 +19,7 @@ import '@dahli/auto-complete-element'
 ```html
 <auto-complete for="list">
   <input type="text">
-  <ul id="list">
+  <ul id="list" hidden>
     <li role="option">Option 1</li>
     <li role="option">Option 2</li>
     <li role="option">Option 3</li>
@@ -34,7 +34,7 @@ You can set the `multiple` attribute on the `<auto-complete>` to allow selection
 ```html
 <auto-complete for="list" multiple>
   <input type="text">
-  <ul id="list">
+  <ul id="list" hidden>
     <li role="option">Option 1</li>
     <li role="option">Option 2</li>
     <li role="option">Option 3</li>
@@ -60,7 +60,7 @@ the blankslate like this:
 ```html
 <auto-complete for="list">
   <input type="text">
-  <ul id="list" class="container">
+  <ul id="list" class="container" hidden>
     <li role="option">Option 1</li>
     <li class="blankslate">No results found!</li>
   </ul>
@@ -85,7 +85,7 @@ the non-selected elements visually via CSS.
 ```html
 <auto-complete for="list">
   <input type="text">
-  <ul id="list">
+  <ul id="list" hidden>
     <li role="option" aria-selected="true">
       Option 1
       <span>(selected)</span>

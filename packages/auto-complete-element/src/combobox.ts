@@ -26,7 +26,7 @@ export default class Combobox {
     this.input.setAttribute('aria-autocomplete', 'list');
     this.list.setAttribute('role', 'listbox');
     if (this.isMultiple) {
-      this.list.setAttribute('aria-multiselectable', 'true');
+      this.input.setAttribute('aria-multiselectable', 'true');
     }
 
     this.onKeydown = this.onKeydown.bind(this);
