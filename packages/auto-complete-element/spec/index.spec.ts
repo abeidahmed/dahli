@@ -1,4 +1,5 @@
 import { expect, fixture, html } from '@open-wc/testing';
+import { nextTick } from '@dahli/utils/src/timing';
 import '../src';
 import type AutoCompleteElement from '../src';
 
@@ -77,8 +78,9 @@ describe('AutoCompleteElement', () => {
       options = list.querySelectorAll('[role="option"]');
     });
 
-    it('activates the first option', () => {
+    it('activates the first option', async () => {
       input.focus();
+      await nextTick();
 
       expect(options[0]).to.have.attribute('data-tracking');
     });
@@ -106,8 +108,9 @@ describe('AutoCompleteElement', () => {
       options = list.querySelectorAll('[role="option"]');
     });
 
-    it('activates the selected option', () => {
+    it('activates the selected option', async () => {
       input.focus();
+      await nextTick();
 
       expect(options[1]).to.have.attribute('data-tracking');
     });

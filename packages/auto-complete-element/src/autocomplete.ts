@@ -2,6 +2,7 @@ import type AutoCompleteElement from './index';
 import Combobox from './combobox';
 import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 import { debounce } from '@dahli/utils/src/delay';
+import { nextTick } from '@dahli/utils/src/timing';
 
 const AUTOCOMPLETE_VALUE_ATTR = 'data-autocomplete-value';
 const DATA_EMPTY_ATTR = 'data-empty';
@@ -136,10 +137,11 @@ export default class Autocomplete {
   }
 }
 
-function activateFirstOption(autocomplete: Autocomplete) {
+async function activateFirstOption(autocomplete: Autocomplete) {
   const { combobox } = autocomplete;
   const selectedOption = combobox.options.filter(selected)[0];
   const firstOption = selectedOption || combobox.visibleOptions[0];
+  await nextTick(); // `aria-activedescendant` on input field isn't always set, so we need to wait for the next tick
   combobox.setActive(firstOption);
 }
 
