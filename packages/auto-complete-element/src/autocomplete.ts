@@ -1,6 +1,5 @@
 import type AutoCompleteElement from './index';
 import Combobox from './combobox';
-import useOutsideInteraction from '@dahli/utils/src/use-outside-interaction';
 import { debounce } from '@dahli/utils/src/delay';
 import { nextTick } from '@dahli/utils/src/timing';
 
@@ -39,9 +38,11 @@ export default class Autocomplete {
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
     this.onInput = debounce(this.onInput.bind(this), 300);
+    this.onBlur = this.onBlur.bind(this);
     this.handleReset = this.handleReset.bind(this);
 
     this.input.addEventListener('focus', this.onFocus);
+    this.input.addEventListener('blur', this.onBlur);
     this.input.addEventListener('pointerdown', this.onPointerDown); // We use `pointerdown` instead of `click` to simulate the `focus` event
     this.input.addEventListener('keydown', this.onKeydown);
     this.input.addEventListener('input', this.onInput);
@@ -50,11 +51,11 @@ export default class Autocomplete {
 
     this.listObserver = new MutationObserver(this.onListToggle.bind(this));
     this.listObserver.observe(this.list, { attributes: true, attributeFilter: ['hidden'] });
-    useOutsideInteraction(this.closeOnOutsideInteraction.bind(this));
   }
 
   destroy() {
     this.input.removeEventListener('focus', this.onFocus);
+    this.input.removeEventListener('blur', this.onBlur);
     this.input.removeEventListener('pointerdown', this.onPointerDown);
     this.input.removeEventListener('keydown', this.onKeydown);
     this.input.removeEventListener('input', this.onInput);
@@ -121,7 +122,7 @@ export default class Autocomplete {
     }
 
     const query = this.input.value.trim();
-    this.combobox.options.forEach(filterOptions(query, { matching: AUTOCOMPLETE_VALUE_ATTR }));
+    this.filterListWithQuery(query);
     this.combobox.setActive(this.combobox.visibleOptions[0]);
     this.list.toggleAttribute(DATA_EMPTY_ATTR, this.combobox.visibleOptions.length === 0);
   }
@@ -134,7 +135,7 @@ export default class Autocomplete {
     if (this.isMultiple) {
       if (this.input.value) {
         this.inputValue = '';
-        this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
+        this.filterListWithQuery();
         this.combobox.setActive(option);
       }
     } else {
@@ -150,12 +151,19 @@ export default class Autocomplete {
     );
   }
 
-  closeOnOutsideInteraction(event: Event) {
-    if (this.list.hidden) return;
-    if (this.element.contains(event.target as HTMLElement)) return;
-    if (this.list.contains(event.target as HTMLElement)) return;
+  onBlur(event: FocusEvent) {
+    const { relatedTarget } = event;
+    if (!(relatedTarget instanceof HTMLElement)) {
+      this.list.hidden = true;
+      return;
+    }
 
-    this.list.hidden = true;
+    const option = relatedTarget.closest<HTMLElement>('[role="option"]');
+    if (option) {
+      this.input.focus(); // Always keep focus on the input field when selecting an option
+    } else {
+      this.list.hidden = true; // Hide the list for other elements that triggered the blur
+    }
   }
 
   async handleReset(event: Event) {
@@ -178,8 +186,12 @@ export default class Autocomplete {
 
   openAndInitializeList() {
     this.list.hidden = false;
-    this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
+    this.filterListWithQuery();
     activateFirstOption(this);
+  }
+
+  filterListWithQuery(query = '') {
+    this.combobox.options.forEach(filterOptions(query, { matching: AUTOCOMPLETE_VALUE_ATTR }));
   }
 
   set inputValue(value: string) {
