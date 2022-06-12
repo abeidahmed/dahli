@@ -245,6 +245,10 @@ describe('AutoCompleteElement', () => {
       clearButton = el.querySelector('[data-autocomplete-reset]');
     });
 
+    it('has the default attributes', () => {
+      expect(clearButton).to.have.attribute('aria-label');
+    });
+
     it('resets aria-selected, aria-activedescendant, data-tracking, input value, and closes the list', async () => {
       input.focus();
       await nextTick();
