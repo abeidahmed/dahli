@@ -7,17 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.0] - 2022-06-12
+
 ### Added
-- Reset selections all at once using `data-autocomplete-reset` attribute on an element
+- Reset selections all at once using `data-autocomplete-reset` attribute on an element - [#21](https://github.com/abeidahmed/dahli/pull/21)
 
 ### Fixed
-- `aria-activedescendant` is empty when opening the list initially
-- `aria-multiselectable` was set on unfocusable element and hence screen readers wasn't announcing it
+- `aria-activedescendant` is empty when opening the list initially - [#20](https://github.com/abeidahmed/dahli/pull/20)
+- `aria-multiselectable` was set on unfocusable element and hence screen readers wasn't announcing it - [#20](https://github.com/abeidahmed/dahli/pull/20)
 - Input not emitting `change` event when modified
-- List not opening on `input` click
-- List not resetting after selecting an option (multiple)
-- Input loses focus after selecting an option
-- List not closing when clicking browser's console
+- List not opening on `input` click - [#21](https://github.com/abeidahmed/dahli/pull/21)
+- List not resetting after selecting an option (multiple) - [#22](https://github.com/abeidahmed/dahli/pull/22)
+- Input loses focus after selecting an option - [#22](https://github.com/abeidahmed/dahli/pull/22)
+- List not closing when clicking browser's console - [#22](https://github.com/abeidahmed/dahli/pull/22)
 
 ## [0.2.0] - 2022-06-01
 
