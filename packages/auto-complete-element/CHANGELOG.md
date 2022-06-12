@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Reset selections all at once using `data-autocomplete-reset` attribute on an element
+
 ### Fixed
 - `aria-activedescendant` is empty when opening the list initially
 - `aria-multiselectable` was set on unfocusable element and hence screen readers wasn't announcing it
 - Input not emitting `change` event when modified
+- List not opening on `input` click
 
 ## [0.2.0] - 2022-06-01
 

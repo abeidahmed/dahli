@@ -59,7 +59,10 @@
   <body class="container-sm py-6">
     <h3>Multi select</h3>
     <auto-complete for="options" multiple style="display: block;">
-      <input type="text" class="form-control">
+      <div style="display: flex;">
+        <input type="text" class="form-control">
+        <button type="button" data-autocomplete-reset>Reset</button>
+      </div>
 
       <ul id="options" hidden>
         <li role="option" data-autocomplete-value="Option 1">
@@ -115,7 +118,10 @@
 
     <h3 style="margin-top: 40px;">Single select</h3>
     <auto-complete for="users" style="display: block;">
-      <input type="text" class="form-control">
+      <div style="display: flex;">
+        <input type="text" class="form-control">
+        <button type="button" data-autocomplete-reset>Reset</button>
+      </div>
 
       <ul id="users" hidden>
         <li role="option" data-autocomplete-value="Tim">

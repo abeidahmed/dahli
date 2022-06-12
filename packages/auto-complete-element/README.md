@@ -27,7 +27,7 @@ import '@dahli/auto-complete-element'
 </auto-complete>
 ```
 
-#### Multiple selections
+### Multiple selections
 
 You can set the `multiple` attribute on the `<auto-complete>` to allow selections on multiple options.
 
@@ -77,6 +77,21 @@ the blankslate like this:
 }
 ```
 
+### Resetting the selections
+
+Add `data-autocomplete-reset` attribute to an element and it will reset all the selections, aria attributes, etc.
+
+```html
+<auto-complete for="list">
+  <input type="text">
+  <button type="button" data-autocomplete-reset>Reset</button>
+
+  <ul id="list" class="container" hidden>
+    <li role="option">Option 1</li>
+  </ul>
+</auto-complete>
+```
+
 ### Selections via `aria-selected="true"` attribute
 
 `aria-selected="true"` is set on the selected option which can be used to differentiate the selected elements from
@@ -120,6 +135,8 @@ autocomplete.addEventListener('auto-complete:selected', (event) => {
   console.log(option);
 });
 ```
+
+`auto-complete:reset` is fired after `data-autocomplete-reset` has been clicked.
 
 ## License
 Distributed under the MIT license.
