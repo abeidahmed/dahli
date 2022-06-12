@@ -220,6 +220,56 @@ describe('AutoCompleteElement', () => {
     });
   });
 
+  describe('reset autocomplete', () => {
+    let el: AutoCompleteElement;
+    let input: HTMLInputElement;
+    let list: HTMLElement;
+    let options: NodeListOf<HTMLElement>;
+    let clearButton: HTMLButtonElement;
+
+    beforeEach(async () => {
+      el = await fixture(html`
+        <auto-complete for="list">
+          <input type="text" value="Player" />
+          <button type="button" data-autocomplete-reset>Reset</button>
+          <ul id="list">
+            <li role="option">Player</li>
+            <li role="option">Taxi</li>
+          </ul>
+        </auto-complete>
+      `);
+
+      input = el.querySelector('input');
+      list = el.querySelector('ul');
+      options = list.querySelectorAll('[role="option"]');
+      clearButton = el.querySelector('[data-autocomplete-reset]');
+    });
+
+    it('resets aria-selected, aria-activedescendant, data-tracking, input value, and closes the list', async () => {
+      input.focus();
+      await nextTick();
+      expect(list).not.to.have.attribute('hidden');
+      expect(input).to.have.attribute('aria-activedescendant', options[0].id);
+      expect(input.value).to.equal('Player');
+      expect(options[0]).to.have.attribute('data-tracking');
+
+      clearButton.click();
+      await nextTick();
+      expect(list).to.have.attribute('hidden');
+      expect(input).not.to.have.attribute('aria-activedescendant');
+      expect(input.value).to.equal('');
+      options.forEach((option) => expect(option).not.to.have.attribute('data-tracking'));
+    });
+
+    it('dispatches a reset event', () => {
+      document.addEventListener('auto-complete:reset', (event) => {
+        expect(event instanceof CustomEvent).to.equal(true);
+      });
+
+      clearButton.click();
+    });
+  });
+
   describe('multiple selections', () => {
     let el: AutoCompleteElement;
     let input: HTMLInputElement;

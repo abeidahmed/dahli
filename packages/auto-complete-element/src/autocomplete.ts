@@ -11,6 +11,7 @@ export default class Autocomplete {
   element: AutoCompleteElement;
   input: HTMLInputElement;
   list: HTMLElement;
+  resetButton: HTMLElement | null;
   isMultiple: boolean;
   combobox: Combobox;
   listObserver: MutationObserver;
@@ -27,17 +28,25 @@ export default class Autocomplete {
     this.input.setAttribute('spellcheck', 'false');
     this.input.setAttribute('autocomplete', 'off');
 
+    // Reset button
+    this.resetButton = this.element.querySelector('[data-autocomplete-reset]');
+    if (this.resetButton && !this.resetButton.hasAttribute('aria-label')) {
+      this.resetButton.setAttribute('aria-label', 'reset autocomplete');
+    }
+
     this.onFocus = this.onFocus.bind(this);
     this.onPointerDown = this.onPointerDown.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
     this.onInput = debounce(this.onInput.bind(this), 300);
+    this.handleReset = this.handleReset.bind(this);
 
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('pointerdown', this.onPointerDown); // We use `pointerdown` instead of `click` to simulate the `focus` event
     this.input.addEventListener('keydown', this.onKeydown);
     this.input.addEventListener('input', this.onInput);
     this.list.addEventListener('combobox:commit', this.onCommit);
+    this.resetButton?.addEventListener('click', this.handleReset);
 
     this.listObserver = new MutationObserver(this.onListToggle.bind(this));
     this.listObserver.observe(this.list, { attributes: true, attributeFilter: ['hidden'] });
@@ -50,6 +59,7 @@ export default class Autocomplete {
     this.input.removeEventListener('keydown', this.onKeydown);
     this.input.removeEventListener('input', this.onInput);
     this.list.removeEventListener('combobox:commit', this.onCommit);
+    this.resetButton?.removeEventListener('click', this.handleReset);
 
     this.listObserver.disconnect();
   }
@@ -140,6 +150,24 @@ export default class Autocomplete {
     if (this.list.contains(event.target as HTMLElement)) return;
 
     this.list.hidden = true;
+  }
+
+  async handleReset(event: Event) {
+    event.preventDefault();
+
+    for (const option of this.combobox.options.filter(selected)) {
+      option.setAttribute('aria-selected', 'false');
+    }
+    syncSelection(this);
+    this.input.focus();
+
+    await nextTick();
+    if (!this.list.hidden) {
+      this.list.hidden = true;
+    }
+
+    // Should fire after closing the list
+    this.list.dispatchEvent(new CustomEvent('auto-complete:reset', { bubbles: true }));
   }
 
   openAndInitializeList() {
