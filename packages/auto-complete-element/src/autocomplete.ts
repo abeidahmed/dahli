@@ -28,11 +28,13 @@ export default class Autocomplete {
     this.input.setAttribute('autocomplete', 'off');
 
     this.onFocus = this.onFocus.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
     this.onInput = debounce(this.onInput.bind(this), 300);
 
     this.input.addEventListener('focus', this.onFocus);
+    this.input.addEventListener('click', this.onClick);
     this.input.addEventListener('keydown', this.onKeydown);
     this.input.addEventListener('input', this.onInput);
     this.list.addEventListener('combobox:commit', this.onCommit);
@@ -44,6 +46,7 @@ export default class Autocomplete {
 
   destroy() {
     this.input.removeEventListener('focus', this.onFocus);
+    this.input.removeEventListener('click', this.onClick);
     this.input.removeEventListener('keydown', this.onKeydown);
     this.input.removeEventListener('input', this.onInput);
     this.list.removeEventListener('combobox:commit', this.onCommit);
@@ -64,9 +67,14 @@ export default class Autocomplete {
   onFocus() {
     if (!this.list.hidden) return;
 
-    this.list.hidden = false;
-    this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
-    activateFirstOption(this);
+    this.openAndInitializeList();
+  }
+
+  onClick() {
+    if (!this.list.hidden) return;
+    if (document.activeElement !== this.input) return; // If it's not active, then `onFocus` logic will apply
+
+    this.openAndInitializeList();
   }
 
   onKeydown(event: KeyboardEvent) {
@@ -80,9 +88,7 @@ export default class Autocomplete {
         break;
       case 'ArrowDown':
         if (event.altKey && this.list.hidden) {
-          this.list.hidden = false;
-          this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
-          activateFirstOption(this);
+          this.openAndInitializeList();
           event.preventDefault();
           event.stopPropagation();
         }
@@ -134,6 +140,12 @@ export default class Autocomplete {
     if (this.list.contains(event.target as HTMLElement)) return;
 
     this.list.hidden = true;
+  }
+
+  openAndInitializeList() {
+    this.list.hidden = false;
+    this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
+    activateFirstOption(this);
   }
 
   set inputValue(value: string) {

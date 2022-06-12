@@ -39,6 +39,16 @@ describe('AutoCompleteElement', () => {
       expect(list).not.to.have.attribute('hidden');
     });
 
+    it('opens the menu on click if already focused', () => {
+      input.focus();
+      list.hidden = true;
+
+      expect(list).to.have.attribute('hidden');
+      input.click();
+
+      expect(list).not.to.have.attribute('hidden');
+    });
+
     it('resets the options on focus', () => {
       input.focus();
 
