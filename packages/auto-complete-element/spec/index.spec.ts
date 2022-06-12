@@ -57,11 +57,11 @@ describe('AutoCompleteElement', () => {
       });
     });
 
-    it('closes the menu on outside interaction', () => {
+    it('closes the menu when input is blurred', () => {
       input.focus();
       expect(list).not.to.have.attribute('hidden');
 
-      document.body.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }));
+      input.blur();
       expect(list).to.have.attribute('hidden');
     });
   });
@@ -180,15 +180,15 @@ describe('AutoCompleteElement', () => {
       el = await fixture(html`
         <auto-complete for="list">
           <input type="text" />
-          <ul id="list">
-            <li role="option">Player</li>
-            <li role="option" data-autocomplete-value="Orange">Taxi</li>
-          </ul>
+          <div id="list">
+            <a href="#" role="option">Player</a>
+            <a href="#" role="option" data-autocomplete-value="Orange">Taxi</a>
+          </div>
         </auto-complete>
       `);
 
       input = el.querySelector('input');
-      list = el.querySelector('ul');
+      list = el.querySelector('div');
       options = list.querySelectorAll('[role="option"]');
     });
 
@@ -217,6 +217,14 @@ describe('AutoCompleteElement', () => {
       input.focus();
       options[1].dispatchEvent(new CustomEvent('combobox:commit', { bubbles: true }));
       expect(relatedTarget).to.equal(options[1]);
+    });
+
+    it('retains focus on the input field', () => {
+      input.focus();
+      options[1].focus();
+      options[1].click();
+
+      expect(document.activeElement).to.equal(input);
     });
   });
 

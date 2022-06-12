@@ -183,7 +183,7 @@ export default class Combobox {
 function commit(list: HTMLElement) {
   const activeOption = list.querySelector<HTMLElement>('[data-tracking]');
   if (!activeOption) return false;
-  if (!enabled(activeOption)) return false;
+  if (!enabled(activeOption)) return true;
 
   activeOption.click();
   return true;

@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `aria-multiselectable` was set on unfocusable element and hence screen readers wasn't announcing it
 - Input not emitting `change` event when modified
 - List not opening on `input` click
+- List not resetting after selecting an option (multiple)
+- Input loses focus after selecting an option
+- List not closing when clicking browser's console
 
 ## [0.2.0] - 2022-06-01
 
