@@ -1,6 +1,6 @@
 {
   "name": "@dahli/details-modal-element",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A modal component that works with the <details> tag.",
   "homepage": "https://github.com/abeidahmed/dahli/tree/main/packages/details-modal-element#readme",
   "bugs": "https://github.com/abeidahmed/dahli/issues?q=is%3Aopen+is%3Aissue+label%3Adetails-modal",

@@ -46,7 +46,7 @@ Modal can be closed using the `data-modal-close` attribute.
 <button type="button" data-modal-close>Close modal</button>
 ```
 
-Modal can be closed using the `method="dialog"` attribute on the `<form>`.
+Modal can also be closed using the `method="dialog"` attribute on the `<form>`.
 
 ```html
 <details>
