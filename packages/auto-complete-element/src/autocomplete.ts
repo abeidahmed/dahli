@@ -28,13 +28,13 @@ export default class Autocomplete {
     this.input.setAttribute('autocomplete', 'off');
 
     this.onFocus = this.onFocus.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onPointerDown = this.onPointerDown.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onCommit = this.onCommit.bind(this);
     this.onInput = debounce(this.onInput.bind(this), 300);
 
     this.input.addEventListener('focus', this.onFocus);
-    this.input.addEventListener('click', this.onClick);
+    this.input.addEventListener('pointerdown', this.onPointerDown); // We use `pointerdown` instead of `click` to simulate the `focus` event
     this.input.addEventListener('keydown', this.onKeydown);
     this.input.addEventListener('input', this.onInput);
     this.list.addEventListener('combobox:commit', this.onCommit);
@@ -46,7 +46,7 @@ export default class Autocomplete {
 
   destroy() {
     this.input.removeEventListener('focus', this.onFocus);
-    this.input.removeEventListener('click', this.onClick);
+    this.input.removeEventListener('pointerdown', this.onPointerDown);
     this.input.removeEventListener('keydown', this.onKeydown);
     this.input.removeEventListener('input', this.onInput);
     this.list.removeEventListener('combobox:commit', this.onCommit);
@@ -70,9 +70,9 @@ export default class Autocomplete {
     this.openAndInitializeList();
   }
 
-  onClick() {
+  onPointerDown() {
     if (!this.list.hidden) return;
-    if (document.activeElement !== this.input) return; // If it's not active, then `onFocus` logic will apply
+    if (document.activeElement !== this.input) return; // If it's not already active, then `onFocus` logic will apply
 
     this.openAndInitializeList();
   }

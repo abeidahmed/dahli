@@ -39,12 +39,12 @@ describe('AutoCompleteElement', () => {
       expect(list).not.to.have.attribute('hidden');
     });
 
-    it('opens the menu on click if already focused', () => {
+    it('opens the menu on pointerdown if already focused', () => {
       input.focus();
       list.hidden = true;
 
       expect(list).to.have.attribute('hidden');
-      input.click();
+      input.dispatchEvent(new MouseEvent('pointerdown'));
 
       expect(list).not.to.have.attribute('hidden');
     });
