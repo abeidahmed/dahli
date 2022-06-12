@@ -5,10 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.2.0] - 2022-06-12
 
 ### Added
-- `data-modal-close` attribute can be added to a clickable element inside the `<details>` to close the modal
+- `data-modal-close` attribute can be added to a clickable element inside the `<details>` to close the modal - [#14](https://github.com/abeidahmed/dahli/pull/14)
 
 ## [0.1.1] - 2022-05-30
 
