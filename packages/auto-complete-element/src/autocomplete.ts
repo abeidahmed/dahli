@@ -131,7 +131,13 @@ export default class Autocomplete {
     if (!(option instanceof HTMLElement)) return;
 
     const value = (option.getAttribute(AUTOCOMPLETE_VALUE_ATTR) || option.textContent) as string;
-    if (!this.isMultiple) {
+    if (this.isMultiple) {
+      if (this.input.value) {
+        this.inputValue = '';
+        this.combobox.options.forEach(filterOptions('', { matching: AUTOCOMPLETE_VALUE_ATTR }));
+        this.combobox.setActive(option);
+      }
+    } else {
       this.inputValue = value;
       this.list.hidden = true;
     }
